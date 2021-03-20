@@ -1,24 +1,22 @@
 import torch
 
 import pyro
-import pyro.poutine as poutine
 import pyro.distributions as dist
 
 import os
 
 OUT_DIR = 'data'
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def make_1pl_simulation_data(num_person, num_item, ability_dim):
 
     ability_prior = dist.Normal(
-        torch.zeros(num_person, ability_dim, device=device),
-        torch.ones(num_person, ability_dim, device=device)
+        torch.zeros(num_person, ability_dim),
+        torch.ones(num_person, ability_dim)
     )
 
     item_feat_prior = dist.Normal(
-        torch.zeros((num_item, 1), device=device),
-        torch.ones((num_item, 1), device=device)
+        torch.zeros((num_item, 1)),
+        torch.ones((num_item, 1))
     )
 
     ability = pyro.sample("ability", ability_prior)
